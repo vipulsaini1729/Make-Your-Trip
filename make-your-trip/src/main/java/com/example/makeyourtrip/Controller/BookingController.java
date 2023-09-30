@@ -4,7 +4,6 @@ import com.example.makeyourtrip.RequestDto.BookingRequest;
 import com.example.makeyourtrip.RequestDto.GetAvailableSeatsDto;
 import com.example.makeyourtrip.ResponseDtos.AvailableSeatResponseDto;
 import com.example.makeyourtrip.Services.BookingService;
-import com.sun.net.httpserver.HttpsServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +15,8 @@ import java.util.List;
 @RequestMapping("/booking")
 public class BookingController {
 
-    @Autowired
-    private BookingService bookingService;
+   @Autowired
+   private BookingService bookingService;
 
     @GetMapping("/getAvailableSeat")
     public ResponseEntity getAvailableSeats(@RequestBody GetAvailableSeatsDto getAvailableSeatsDto){
@@ -30,6 +29,6 @@ public class BookingController {
     @PostMapping("/bookFlight")
     public ResponseEntity bookFlight(@RequestBody BookingRequest bookingRequest){
 
-
+    return null;
     }
 }

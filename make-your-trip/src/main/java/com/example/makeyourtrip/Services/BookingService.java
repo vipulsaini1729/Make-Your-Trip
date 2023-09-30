@@ -1,5 +1,6 @@
 package com.example.makeyourtrip.Services;
 
+
 import com.example.makeyourtrip.Models.*;
 import com.example.makeyourtrip.Repository.BookingRepository;
 import com.example.makeyourtrip.Repository.TransportRepository;
@@ -28,7 +29,7 @@ public class BookingService {
     @Autowired
     private UserRepository userRepository;
 
-   public List<AvailableSeatResponseDto> getAvailableSeatsResponse(GetAvailableSeatsDto entryDto){
+    public List<AvailableSeatResponseDto> getAvailableSeatsResponse(GetAvailableSeatsDto entryDto){
 
         List<Booking> doneBookings = bookingRepository.findBookings(entryDto.getJourneyDate(), entryDto.getTransportId());
 
@@ -45,29 +46,29 @@ public class BookingService {
             }
         }
 
-       Transport transport = transportRepository.findById(entryDto.getTransportId()).get();
+        Transport transport = transportRepository.findById(entryDto.getTransportId()).get();
 
         List<Seat> seatList = transport.getSeatList();
 
         //Total seats - booked seats
 
-       List<AvailableSeatResponseDto> finalAvailableSeats = new ArrayList<>();
+        List<AvailableSeatResponseDto> finalAvailableSeats = new ArrayList<>();
 
-       for(Seat seat : seatList){
+        for(Seat seat : seatList){
 
-           if(bookedSeats.contains(seat.getSeatNo())){
-               continue;
-           }
-           else {
+            if(bookedSeats.contains(seat.getSeatNo())){
+                continue;
+            }
+            else {
                 // we will be building that response object
 
-               AvailableSeatResponseDto availableSeat = AvailableSeatResponseDto.builder().seatNo(seat.getSeatNo())
-                       .seatPrice(seat.getPrice()).seatType(seat.getSeatType()).build();
+                AvailableSeatResponseDto availableSeat = AvailableSeatResponseDto.builder().seatNo(seat.getSeatNo())
+                        .seatPrice(seat.getPrice()).seatType(seat.getSeatType()).build();
 
-               finalAvailableSeats.add(availableSeat);
-           }
-       }
-       return finalAvailableSeats;
+                finalAvailableSeats.add(availableSeat);
+            }
+        }
+        return finalAvailableSeats;
     }
 
     public String makeABooking(BookingRequest bookingRequest){
@@ -82,7 +83,7 @@ public class BookingService {
 
         TicketEntity ticketEntity = createTicketEntity(transportObj, bookingRequest);
 
-       // Set the FK
+        // Set the FK
 
         booking.setTransport(transportObj);
         booking.setUser(userObj);
@@ -109,23 +110,23 @@ public class BookingService {
 
     private TicketEntity createTicketEntity(Transport transport, BookingRequest bookingRequest){
 
-       Integer totalPricePaid = findTotalPricePaid(transport, bookingRequest.getSeatNos());
+        Integer totalPricePaid = findTotalPricePaid(transport, bookingRequest.getSeatNos());
 
-       String routeDetails = getRouteDetails(transport);
+        String routeDetails = getRouteDetails(transport);
 
-       TicketEntity ticketEntity = TicketEntity.builder()
-               .allSeatNos(bookingRequest.getSeatNos()).journeyDate(bookingRequest.getJourneyDate())
-               .startTime(transport.getStartTime())
-               .routeDetails(routeDetails)
-               .totalCostPaid(totalPricePaid)
-               .build();
+        TicketEntity ticketEntity = TicketEntity.builder()
+                .allSeatNos(bookingRequest.getSeatNos()).journeyDate(bookingRequest.getJourneyDate())
+                .startTime(transport.getStartTime())
+                .routeDetails(routeDetails)
+                .totalCostPaid(totalPricePaid)
+                .build();
 
-       return ticketEntity;
+        return ticketEntity;
     }
 
     private String getRouteDetails(Transport transport){
 
-       // "DELHI TO BANGALORE
+        // "DELHI TO BANGALORE
 
         Routes routes = transport.getRoute();
 
@@ -136,9 +137,10 @@ public class BookingService {
 
     private Integer findTotalPricePaid(Transport transport, String seatNos){
 
-       //Todo function to find the total price paid for all the booked seat
+        //Todo function to find the total price paid for all the booked seat
 
 
-       return 0;
+        return 0;
     }
 }
+
